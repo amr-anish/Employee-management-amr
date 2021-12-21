@@ -1,0 +1,71 @@
+<div fxLayoutAlign="center center" fxFlexFill>
+  <mat-card fxFlex="35">
+    <mat-toolbar class="tool" color="primary">Employee Registration Page </mat-toolbar>
+    <form #authenticationDataForm="ngForm" [formGroup]="formVar" fxLayout="column">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input type="email" id="email" matInput (keyup)="handleChange($event)" placeholder="Ex. pat@example.com"
+          [formControl]="emailFormControl" [errorStateMatcher]="matcher">
+        <mat-hint></mat-hint>
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="password" matInput placeholder="Enter your Password!" (keyup)="handleChange($event)" id="password"
+          [formControl]="passwordFormControl">
+        <mat-hint></mat-hint>
+        <mat-error *ngIf="passwordFormControl.hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Full Name</mat-label>
+        <input type="text" matInput placeholder="Enter your Name" (keyup)="handleChange($event)" id="name"
+          [formControl]="nameFormControl">
+        <mat-hint></mat-hint>
+        <mat-error *ngIf="nameFormControl.hasError('required')">
+          Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Date Of Birth</mat-label>
+        <input type="date" matInput placeholder="Enter your Date of Birth!" id="dob" formControlName="dob">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Phone Number</mat-label>
+        <input type="number" matInput placeholder="Enter your Phone Number!" (keyup)="handleChange($event)"
+          id="phone_number" [formControl]="phoneNoFormControl">
+        <mat-hint></mat-hint>
+        <mat-error *ngIf="phoneNoFormControl.hasError('required')">
+          Phone Number is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Select Desigination</mat-label>
+        <select matNativeControl (click)="ListKeyManager()" formControlName="desiginationId">
+          <option value="1">GROUP MANAGER</option>
+          <option value="2">PROJECT MANAGER</option>
+          <option value="3">ASSOCIATE MANAGER</option>
+        </select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Select Manager</mat-label>
+        <select matNativeControl formControlName="managerId">
+          <option *ngFor="let manager of ResultManagerList" [value]="manager.emp_id">
+            {{manager.name}}
+          </option>
+        </select>
+      </mat-form-field>
+      <mat-error> <strong>{{ formError }}</strong> </mat-error>
+      <button (click)="validate(); $event.preventDefault()" color="primary" mat-raised-button type="submit"> Register
+      </button>
+      <br />
+      <button (click)="goLogin(); " color="primary" mat-raised-button type="submit"> Login </button>
+    </form>
+  </mat-card>
+</div>

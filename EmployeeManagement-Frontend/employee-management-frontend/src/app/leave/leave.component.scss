@@ -1,0 +1,72 @@
+// MDB SCSS
+@import "~mdb-angular-ui-kit/assets/scss/mdb.scss";
+.main{
+    padding: 10px;
+}
+.subMain{
+    padding: 1em 1em 1em 1em;
+    display: inline-flex;
+    flex-wrap: wrap;
+    width:-webkit-fill-available ;
+}
+.subMainTitle{
+    padding: 2em 0em 2em 3em;
+}
+.error{
+    font-size: 18px;
+    width: -webkit-fill-available;
+}
+.success{
+    font-size: 18px;
+    width: -webkit-fill-available;
+    color: green;
+
+}
+
+.tablee{
+  
+        margin-top: 10px;
+        
+        overflow: auto;
+        max-height: 400px;
+        width: -webkit-fill-available;
+       
+       
+      }
+
+
+
+.outerTable
+{
+    width: -webkit-fill-available;
+}
+    .d-flex {
+        display: flex !important;
+        width: -webkit-fill-available;
+    }
+  
+     
+    th.mat-header-cell, td.mat-cell, td.mat-footer-cell
+    {
+        width:10em
+    }
+
+    .lform{
+        width: 20em;
+      
+    }
+
+    th{
+        text-align: center;
+    }
+
+
+    .pending{
+        color: rgb(0, 99, 156);
+    }
+    .approved{
+        color: rgb(2, 114, 17);
+    }
+    .rejected{
+        color: rgb(255, 0, 0);
+    }

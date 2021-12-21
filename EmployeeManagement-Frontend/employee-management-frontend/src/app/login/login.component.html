@@ -1,0 +1,31 @@
+<div fxLayoutAlign="center center" fxFlexFill>
+  <mat-card fxFlex="25">
+    <mat-toolbar class="tool" color="primary">Employee Login Page </mat-toolbar>
+    <form #authenticationDataForm="ngForm" fxLayout="column">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input type="email" id="email" matInput (keyup)="handleChange($event)" placeholder="Ex. pat@example.com"
+          [formControl]="emailFormControl" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="password" matInput placeholder="Enter your Password!" (keyup)="handleChange($event)" id="password"
+          [formControl]="passwordFormControl">
+        <mat-error *ngIf="passwordFormControl.hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-error> {{ formError }} </mat-error>
+      <button (click)="doLogin(); $event.preventDefault()" color="primary" mat-raised-button type="submit"
+        [disabled]="buttonActive"> Login </button>
+      <br />
+      <button (click)="register(); " color="primary" mat-raised-button type="submit"> Register </button>
+    </form>
+  </mat-card>
+</div>

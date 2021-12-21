@@ -1,0 +1,161 @@
+<app-navigation> </app-navigation>
+
+<div>
+  <div class="main" fxLayoutAlign="center center">
+    <div class="title">
+      <h4>Leave Balance : &nbsp;&nbsp;</h4>
+    </div>
+    <mat-card class="mat">
+      <div class="d-flex align-items-start bg-light " style="height: 30px;">
+        <strong>Casual Leave :&nbsp;{{ leaveBalance.casual }} </strong>
+        <div class="col"> </div>&nbsp;&nbsp;
+        <strong> Sick Leave :&nbsp;{{ leaveBalance.sick }}</strong>
+        <div class="col"> </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="subMain">
+    <table class="outerTable">
+      <thead>
+        <th>
+          <h4>Apply Leave</h4>
+        </th>
+        <th>
+          <h4>Applied Leave</h4>
+        </th>
+      </thead>
+      <tr>
+        <td class="lform">
+          <div>
+            <mat-card fxFlex="95">
+              <form fxLayout="column" [formGroup]="formVar">
+                <mat-form-field appearance="fill">
+                  <mat-label>Select Leave type</mat-label>
+                  <select matNativeControl formControlName="selectLeavetype">
+                    <option value="sick">Sick</option>
+                    <option value="casual">casual</option>
+                  </select>
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>Reason</mat-label>
+                  <input type="text" matInput placeholder="State your reason" (keyup)="handleChange($event)" id="reason"
+                    formControlName="reason">
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>No Of Days</mat-label>
+                  <input type="number" matInput placeholder="number of days" (mouseleave)="handleChange($event)"
+                    (keyup)="handleChange($event)" id="no_of_days" min="1" max="5" formControlName="days">
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>From Date</mat-label>
+                  <input type="date" matInput (mouseleave)="handleChange($event)" (keyup)="handleChange($event)"
+                    id="from_date" formControlName="fromdate">
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>To Date</mat-label>
+                  <input type="date" matInput (mouseleave)="handleChange($event)" (keyup)="handleChange($event)"
+                    id="to_date" formControlName="todate">
+                </mat-form-field>
+                <button (click)="applyLeave(); $event.preventDefault();" [disabled]="applyLeaveButtonActive"
+                  color="primary" mat-raised-button type="submit"> Apply Leave </button>
+                <mat-error class="error">
+                  {{ leaveApplyErrorOutput }}
+                </mat-error>
+              </form>
+              <label class="success"> {{ leaveApplySuccessOutput }} </label>
+            </mat-card>
+          </div>
+        </td>
+        <td>
+          <div>
+            <mat-card fxFlex="120">
+              <div class="tablee">
+                <table mat-table [dataSource]="leaveList">
+                  <ng-container matColumnDef="leave_id">
+                    <th mat-header-cell *matHeaderCellDef> ID. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.leave_id}} </td>
+                  </ng-container>                
+                  <ng-container matColumnDef="leave_type">
+                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.leave_type}} </td>
+                  </ng-container>          
+                  <ng-container matColumnDef="no_of_days">
+                    <th mat-header-cell *matHeaderCellDef> Days </th>
+                    <td mat-cell *matCellDef="let element"> {{element.no_of_days}} </td>
+                  </ng-container>                  
+                  <ng-container matColumnDef="reason">
+                    <th mat-header-cell *matHeaderCellDef> Reason </th>
+                    <td mat-cell *matCellDef="let element"> {{element.reason}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="fromdate">
+                    <th mat-header-cell *matHeaderCellDef> From </th>
+                    <td mat-cell *matCellDef="let element"> {{element.from_date}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="todate">
+                    <th mat-header-cell *matHeaderCellDef> To </th>
+                    <td mat-cell *matCellDef="let element"> {{element.to_date}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="manager">
+                    <th mat-header-cell *matHeaderCellDef> Manager </th>
+                    <td mat-cell *matCellDef="let element">
+                      <ng-container *ngIf=" element.manager_id== 0; else elseTemplate">
+                        &nbsp;&nbsp;&nbsp;&nbsp; --
+                      </ng-container>
+                      <ng-template #elseTemplate>
+                        {{ managerName.name }}
+                      </ng-template>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let element">
+                      <strong>
+                        <ng-container *ngIf="element.approval==0; ">
+                          <div class="pending">
+                            Pending
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="element.approval==1; ">
+                          <div class="approved"> Approved </div>
+                        </ng-container>
+                        <ng-container *ngIf="element.approval==2; ">
+                          <div class="rejected"> Rejected </div>
+                        </ng-container>
+                      </strong>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element">
+                      <ng-container *ngIf="element.approval==0; ">
+                        <div class="pending">
+                          <button (click)="deleteLeaveForm(element.leave_id); $event.preventDefault();" color="primary"
+                            mat-raised-button type="submit"> Withdraw </button>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="element.approval==1; ">
+                        <div class="approved">
+                          <button (click)="deleteLeaveForm(element.leave_id); $event.preventDefault();" color="warn"
+                            mat-raised-button type="submit"> Delete </button>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="element.approval==2; ">
+                        <div class="rejected">
+                          <button (click)="deleteLeaveForm(element.leave_id); $event.preventDefault();" color="warn"
+                            mat-raised-button type="submit">Delete </button>
+                        </div>
+                      </ng-container>
+                    </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              </div>
+            </mat-card>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

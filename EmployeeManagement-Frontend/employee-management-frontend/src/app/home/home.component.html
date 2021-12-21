@@ -1,0 +1,40 @@
+<app-navigation> </app-navigation>
+
+
+<div class="title">
+  <h2>Employee Details</h2>
+</div>
+<div class="main" fxLayoutAlign="center center">
+  <mat-card class="mat" fxFlex="95">
+    <div class="d-flex align-items-start bg-light " style="height: 30px;">
+      <strong>Employee ID :&nbsp;</strong>
+      <div class="col"> {{ empDetails.emp_id }} </div>
+      <strong> Full Name :&nbsp;</strong>
+      <div class="col">{{ empDetails.name }} </div>
+      <strong>Email :&nbsp; </strong>
+      <div class="col">{{ empDetails.email }}</div>
+    </div>
+    <div class="d-flex align-items-start bg-light " style="height:50px;">
+      <strong> Manager :&nbsp;</strong>
+      <div class="col">
+        <ng-container *ngIf="managerDetails !== null ; else elseTemplate">
+          {{ managerDetails.name }}
+        </ng-container>
+        <ng-template #elseTemplate>
+          Not Available
+        </ng-template>
+      </div>
+      <strong> Desigination :&nbsp; </strong>
+      <div class="col">{{ empDetails.desigination.post }} </div>
+      <div class="col"> </div>
+    </div>
+    <div class="i"> <i>Personal Details</i> </div>
+    <div class="d-flex align-items-start bg-light " style="height: 30px;">
+      <br /><strong> Phone Number :&nbsp; </strong>
+      <div class="col"> {{ empDetails.phone_number }} </div>
+      <strong> Date of Birth :&nbsp; </strong>
+      <div class="col">{{ empDetails.dob }} </div>
+    </div>
+
+  </mat-card>
+</div>

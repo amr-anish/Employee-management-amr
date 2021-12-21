@@ -1,0 +1,15 @@
+
+
+.mat-table {
+    background: #fff;
+    width: -webkit-fill-available;}
+
+    .pending{
+        color: rgb(0, 99, 156);
+    }
+    .approved{
+        color: rgb(2, 114, 17);
+    }
+    .rejected{
+        color: rgb(255, 0, 0);
+    }
